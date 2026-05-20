@@ -1,0 +1,756 @@
+<!-- THIS IS index.html............................... -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Retinex Diabetic Retinopathy Detection</title>
+  <meta name="description" content="Predict diabetic retinopathy diagnosis using a convolutional neural network (CNN) model. Upload a scanned retina image to check the result with probabilities.">
+    <meta name="keywords" content="diabetic retinopathy, retinal image analysis, CNN model, prediction, classification, deep learning, medical imaging">
+    <meta name="author" content="Ajmal Akram">
+    <meta property="og:title" content="Predict Diagnosis - Diabetic Retinopathy Detection">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: FlexStart
+  * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+  * Updated: Mar 17 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+<style>
+  .about,
+.values{
+  background: #f6f9ff;
+}
+#predict{
+  background: #eef2fb;
+}
+
+
+  #predict #uploadBox:hover {
+  border-color: #28a745;
+  background-color: #f8f9fa;
+}
+
+#predict button[type="submit"]:hover {
+  background-color: rgb(15, 154, 126) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+@media (max-width: 991px) {
+  #predict .row {
+    align-items: center !important;
+  }
+  
+  #predict .col-lg-5 {
+    margin-bottom: 2rem;
+  }
+  
+  #predict .image-wrapper {
+    height: 300px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #predict form {
+    padding: 1.5rem !important;
+  }
+  
+  #predict #uploadBox {
+    padding: 1.5rem !important;
+    min-height: 180px !important;
+  }
+  
+  #predict h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  #predict button[type="submit"] {
+    padding: 0.65rem 2rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  #predict .image-wrapper {
+    height: 250px !important;
+  }
+  
+  #predict #uploadBox svg {
+    width: 50px;
+    height: 50px;
+  }
+  
+  #predict #uploadBox h4 {
+    font-size: 1rem !important;
+  }
+}
+</style>
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="templates\index.html" class="logo d-flex align-items-center">
+        <img src="static/assets/img/logo.png" alt="">
+        <span>RETINEX</span>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          
+
+          <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
+          <li><a class="getstarted scrollto" href="templates\predict.html">Predict</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">RETINEX : WEB BASED DIABETIC RETINOPATHY DETECTION SYSTEM</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Aims to detect and classify retinal images for diabetic retinopathy diagnosis.</h2>
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="#predict" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Predict</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="static/assets/img/hero-img.png" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+ 
+
+    <!-- ======= About Section ======= -->
+<section id="about" class="about" style="padding: 70px 0;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row g-5 align-items-center">
+
+      <!-- TEXT CONTENT -->
+      <div class="col-lg-6 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Badge -->
+        <span
+          class="badge px-3 py-2 mb-3 rounded-pill"
+          style="
+            background: #e8edff;
+            color: #4154f1;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+          "
+        >
+          Medical Innovation
+        </span>
+
+        <!-- Title -->
+        <h2 
+          style="
+            color: #012970;
+            font-weight: 800;
+            font-size: 2.4rem;
+            line-height: 1.25;
+            margin-bottom: 15px;
+          "
+        >
+          Transforming Diabetic Retinopathy Detection
+        </h2>
+
+        <!-- Description -->
+        <p 
+          style="
+            color: #4a4a4a;
+            font-size: 1.06rem;
+            line-height: 1.85;
+            margin-bottom: 30px;
+          "
+        >
+          Our AI-assisted diagnostic pipeline achieves <strong>over 91% accuracy</strong> in
+          detecting diabetic retinopathy—empowering clinicians with faster, more reliable,
+          and cost-effective screening.
+        </p>
+
+        <!-- Approach Section -->
+        <h5 
+          style="
+            color: #012970;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.22rem;
+          "
+        >
+          Our Approach
+        </h5>
+
+        <p style="color: #555; font-size: 0.97rem; line-height: 1.75; margin-bottom: 15px;">
+          Built on top of state-of-the-art convolutional networks and advanced augmentation
+          systems, our technology addresses key challenges in modern clinical imaging:
+        </p>
+
+        <ul class="list-unstyled" style="color: #555; font-size: 0.95rem;">
+          <li class="d-flex mb-2">
+            <i class="bi bi-check-circle-fill text-primary me-2 mt-1" style="font-size: 0.95rem;"></i>
+            Enhanced dataset creation with synthetic image generation
+          </li>
+          <li class="d-flex mb-2">
+            <i class="bi bi-check-circle-fill text-primary me-2 mt-1" style="font-size: 0.95rem;"></i>
+            Uncertainty scoring for reducing diagnostic ambiguity
+          </li>
+          <li class="d-flex mb-2">
+            <i class="bi bi-check-circle-fill text-primary me-2 mt-1" style="font-size: 0.95rem;"></i>
+            Scalable CNN architecture optimized for robust multiclass prediction
+          </li>
+          <li class="d-flex mb-2">
+            <i class="bi bi-check-circle-fill text-primary me-2 mt-1" style="font-size: 0.95rem;"></i>
+            Real-time model inference for seamless clinical workflows
+          </li>
+        </ul>
+
+        <!-- Impact Card -->
+        <div 
+          class="p-4 mt-4 rounded"
+          style="
+            background: #f9faff;
+            border-left: 4px solid #4154f1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+          "
+        >
+          <p 
+            style="
+              margin: 0;
+              color: #4a4a4a;
+              font-size: 0.95rem;
+              line-height: 1.7;
+            "
+          >
+            <strong>Impact:</strong> Early identification prevents irreversible vision loss
+            while reducing clinician workload through automated, trustworthy AI screening.
+          </p>
+        </div>
+
+        <!-- Button -->
+        <div class="mt-4">
+          <a 
+            href="#"
+            class="btn btn-primary px-4 py-3 rounded-pill d-inline-flex align-items-center"
+            style="
+              background: #4154f1;
+              border: none;
+              font-weight: 600;
+              font-size: 0.95rem;
+              box-shadow: 0 4px 14px rgba(65, 84, 241, 0.25);
+              transition: all 0.3s ease;
+            "
+            onmouseover="this.style.transform='translateY(-3px)'"
+            onmouseout="this.style.transform='translateY(0)'"
+          >
+            Explore Our Research
+            <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- IMAGE AREA -->
+      <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-out" data-aos-delay="150">
+        <div class="position-relative">
+
+          <!-- Main Image -->
+          <img 
+            src="static/assets/img/about.jpg"
+            class="img-fluid"
+            alt="Diabetic Retinopathy Detection Technology"
+            style="
+              border-radius: 20px;
+              width: 100%;
+              box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+              object-fit: cover;
+            "
+          >
+
+          <!-- Floating Accuracy Badge -->
+          <div
+            class="position-absolute bottom-0 start-0 m-4 p-3"
+            style="
+              background: rgba(255, 255, 255, 0.92);
+              backdrop-filter: blur(12px);
+              border-radius: 14px;
+              box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            "
+          >
+            <div class="d-flex align-items-center">
+              <h3 
+                class="mb-0 text-primary me-3"
+                style="font-weight: 800; font-size: 1.9rem;"
+              >
+                91%+
+              </h3>
+              <div>
+                <p class="mb-0" style="color: #333; font-size: 0.85rem; font-weight: 600;">Accuracy Rate</p>
+                <p class="mb-0" style="color: #777; font-size: 0.74rem;">Clinical Testing</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End About Section -->
+
+
+
+    <!-- ======= Values Section ======= -->
+<section id="values" class="values">
+
+  <div class="container" data-aos="fade-up">
+
+    <!-- Section Header -->
+    <header class="section-header mb-5">
+      <h2 style="color: #012970; font-weight: 700; font-size: 2rem;">Our Solution</h2>
+    </header>
+
+    <div class="row g-4">
+
+      <!-- Card 1 -->
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div 
+          class="box text-center p-4 rounded"
+          style="
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all .3s ease;
+          "
+          onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.08)'"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'"
+        >
+          <img 
+            src="static/assets/img/values-1.png" 
+            class="img-fluid mb-3" 
+            alt=""
+            style="max-width: 90px;"
+          >
+          <h3 
+            style="color: #012970; font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;"
+          >
+            Data-driven Solutions
+          </h3>
+          <p style="color: #555; line-height: 1.7; font-size: 0.95rem;">
+            Tackling data limitations through optimized data collection and intelligent augmentation techniques.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+        <div 
+          class="box text-center p-4 rounded"
+          style="
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all .3s ease;
+          "
+          onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.08)'"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'"
+        >
+          <img 
+            src="static/assets/img/values-2.png" 
+            class="img-fluid mb-3" 
+            alt=""
+            style="max-width: 90px;"
+          >
+          <h3 
+            style="color: #012970; font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;"
+          >
+            Improved Accuracy
+          </h3>
+          <p style="color: #555; line-height: 1.7; font-size: 0.95rem;">
+            Achieves <strong>91% accuracy</strong> on clinical test data, ensuring dependable DR classification performance.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="600">
+        <div 
+          class="box text-center p-4 rounded"
+          style="
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all .3s ease;
+          "
+          onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.08)'"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'"
+        >
+          <img 
+            src="static/assets/img/values-3.png" 
+            class="img-fluid mb-3" 
+            alt=""
+            style="max-width: 90px;"
+          >
+          <h3 
+            style="color: #012970; font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;"
+          >
+            Scalability
+          </h3>
+          <p style="color: #555; line-height: 1.7; font-size: 0.95rem;">
+            CNN architecture designed to scale effortlessly for larger datasets and multi-class medical classifications.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- End Values Section -->
+
+
+
+<section id="predict">
+  <div class="container" data-aos="fade-up">
+    <div class="row gy-4 align-items-center justify-content-center">
+
+      <!-- Image Section -->
+      <div class="col-lg-5 col-md-6">
+        <div 
+          class="image-wrapper"
+          style="
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            background: #fff;
+            height: 350px;               /* FIXED HEIGHT */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <img 
+            src="static/assets/img/predict.jpg" 
+            alt="Retina Scan"
+            style="
+              width: 100%;
+              height: 100%;
+              object-fit: cover;        /* PREVENTS STRETCH */
+            "
+          >
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="col-lg-5 col-md-6">
+        <div style="display: flex; flex-direction: column;">
+
+          <header class="section-header" style="margin-bottom: 1.7rem;">
+            <h2 style="font-weight: 700; color: #012970; font-size: 1.9rem; margin-bottom: 0.4rem;">
+              Upload Scanned Retina
+            </h2>
+            <p style="color: #6c757d; font-size: 1.05rem; margin: 0;">
+              Get instant diagnostic insights
+            </p>
+          </header>
+
+          <!-- Upload Form -->
+          <form 
+            action="/predict" 
+            method="post" 
+            enctype="multipart/form-data"
+            style="
+              background: #ffffff;
+              padding: 2rem;
+              border-radius: 16px;
+              box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+            "
+          >
+
+            <label 
+              for="formFileLg"
+              style="display: block; margin-bottom: 1rem; font-weight: 600; color: #2c3e50; font-size: 0.95rem;"
+            >
+              Select Image File
+            </label>
+
+            <!-- Upload Box -->
+            <div 
+              style="
+                position: relative;
+                min-height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <input 
+                type="file" 
+                name="file" 
+                id="formFileLg" 
+                accept="image/*" 
+                required
+                onchange="displayFileName(this)"
+                style="
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  opacity: 0;
+                  cursor: pointer;
+                  z-index: 2;
+                "
+              >
+
+              <div 
+                id="uploadBox"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  border: 2px dashed #d1d9e6;
+                  border-radius: 12px;
+                  padding: 2rem;
+                  background: #fdfdfd;
+                  text-align: center;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <svg 
+                  width="60" height="60"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6c757d" 
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="margin-bottom: 1rem;"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+
+                <h4 style="color: #2c3e50; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem;">
+                  Drop your file here
+                </h4>
+                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                  or click to browse
+                </p>
+
+                <div 
+                  id="fileName"
+                  style="
+                    color: #1abc9c;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    margin-top: 0.8rem;
+                    min-height: 20px;
+                  "
+                ></div>
+
+                <p style="color: #adb5bd; font-size: 0.8rem; margin-top: 1rem;">
+                  JPG, PNG, JPEG • Max 10MB
+                </p>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit"
+              class="btn btn-success"
+              style="
+                padding: 0.9rem 3rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 10px;
+                width: 100%;
+                background-color: #1abc9c;
+                border: none;
+                transition: all .3s ease;
+              "
+              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 18px rgba(0,0,0,0.08)'"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+            >
+              Analyze Retina
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  
+
+    
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer" >
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <img src="static/assets/img/logo.png" alt="">
+              <span>RETINEX</span>
+            </a>
+            <p>External Links</p>
+            <div class="social-links mt-3">
+              <a href="https://x.com/KlesMrc" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.facebook.com/klesocietyofficial/" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/kleshospital?igsh=MWZsNmh5cG10b3h4NA==" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Reference Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.mdpi.com/2227-9032/11/6/863">Deep Learning-Based Prediction of Diabetic Retinopathy Using CLAHE and ESRGAN for Enhancement</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.nature.com/articles/s41591-023-02742-5">A deep learning system for predicting time to progression of diabetic retinopathy</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9819317/">Deep Learning for the Detection and Classification of Diabetic Retinopathy with an Improved Activation Function</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.nature.com/articles/s41467-021-23458-5">A deep learning system for detecting diabetic retinopathy across the disease spectrum</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9914068/https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9914068/">A Survey on Deep-Learning-Based Diabetic Retinopathy Classification</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Further links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://en.wikipedia.org/wiki/Diabetic_retinopathy">Diabetic Retinopathy</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.mayoclinic.org/diseases-conditions/diabetic-retinopathy/symptoms-causes/syc-20371611">Symptoms & Causes</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/diabetic-retinopathy#:~:text=Diabetic%20retinopathy%20is%20caused%20by,vessels%20all%20over%20the%20body.">Treatments</a></li>
+              
+            </ul>
+          </div>
+
+          
+            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+              <h4>About Us</h4>
+              <p>
+                <p>Students OF</p>
+                K.L.E Society's College of B.C.A (Autonomous) R.L.Science Institute<br>
+                Lingaraj College Compus, TSL College Road, Belagavi, Karnataka – 590001<br>
+                Karnataka. <br><br>
+              </p>
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>DR</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/flexstart-bootstrap-startup-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="static/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+
+<script src="static/assets/js/main.js"></script>
+
+<script>
+  function displayFileName(input) {
+
+    const fileName = input.files[0]?.name;
+
+    const fileNameDiv = document.getElementById('fileName');
+
+    const uploadBox = document.getElementById('uploadBox');
+
+    if (fileName) {
+
+      fileNameDiv.innerHTML = '✓ ' + fileName;
+
+      uploadBox.style.borderColor = '#28a745';
+
+      uploadBox.style.backgroundColor = '#f0fff4';
+    }
+  }
+</script>
+
+{% if message %}
+
+<script>
+    alert("{{ message}}");
+</script>
+
+{% endif %}
+
+</body>
+
+</html>
