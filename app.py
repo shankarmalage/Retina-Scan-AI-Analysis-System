@@ -14,7 +14,6 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.platypus import PageBreak
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
-
  
 app = Flask(__name__)
 app.secret_key = "retina_secret_key"
@@ -43,55 +42,6 @@ cursor = db.cursor()
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ================= RETINA IMAGE VALIDATION =================
-
-def is_retina_image(path):
-
-    img = cv2.imread(path)
-
-    if img is None:
-        return False
-
-    # Resize image
-    img = cv2.resize(img, (300, 300))
-
-    # Convert to HSV
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-    # Retina images contain red/orange tones
-    lower_red = np.array([0, 40, 40])
-    upper_red = np.array([25, 255, 255])
-
-    mask = cv2.inRange(hsv, lower_red, upper_red)
-
-    red_pixels = cv2.countNonZero(mask)
-
-    total_pixels = img.shape[0] * img.shape[1]
-
-    red_ratio = red_pixels / total_pixels
-
-    # Reject non-retina images
-    if red_ratio < 0.15:
-        return False
-
-    # Detect circular retina structure
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    circles = cv2.HoughCircles(
-        gray,
-        cv2.HOUGH_GRADIENT,
-        1,
-        100,
-        param1=50,
-        param2=30,
-        minRadius=80,
-        maxRadius=150
-    )
-
-    if circles is None:
-        return False
-
-    return True
 
 
 # ================= LOAD AI MODEL =================
@@ -467,6 +417,25 @@ def signup():
 def home():
     return redirect('/login')
 
+
+# ================= PATIENT DASHBOARD =================
+
+@app.route('/patientDashboard')
+def patient_dashboard():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('patientDashboard.html')
+
+
+# ================= TEST ROUTE =================
+
+@app.route('/test')
+def test():
+    return "Route Working"
+
+
 # ================= LOGIN =================
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -478,7 +447,6 @@ def login():
         password = request.form['password']
 
         query = "SELECT * FROM users WHERE email=%s"
-
         cursor.execute(query, (email,))
 
         user = cursor.fetchone()
@@ -498,19 +466,18 @@ def login():
 
     return render_template('login.html')
 
-
 # ================= DASHBOARD =================
-
 @app.route('/dashboard')
 def dashboard():
-
-    if 'user' not in session:
-        return redirect('/login')
-
     return render_template('index.html')
 
+@app.route('/doctor_dashboard')
+def doctor_dashboard():
 
+        if 'user' not in session:
+           return redirect('/login')
 
+        return render_template('doctorDashboard.html')
 
 
 # ================= PREDICT =================
@@ -518,11 +485,9 @@ def dashboard():
 @app.route('/predict', methods=['POST'])
 def upload_file():
 
-    # Login check
     if 'user' not in session:
         return redirect('/login')
 
-    # File check
     if 'file' not in request.files:
         return render_template(
             'index.html',
@@ -531,17 +496,14 @@ def upload_file():
 
     file = request.files['file']
 
-    # Empty file check
     if file.filename == '':
         return render_template(
             'index.html',
             message='Please select retina image'
         )
 
-    # Allowed image check
     if file and allowed_file(file.filename):
 
-        # Secure filename
         filename = secure_filename(file.filename)
 
         save_path = os.path.join(
@@ -549,15 +511,10 @@ def upload_file():
             filename
         )
 
-        # Save image
         file.save(save_path)
 
-        # ================= RETINA VALIDATION =================
-
         if not is_retina_image(save_path):
-            print("Upload Image Is NOT a Retina Image")
 
-            # Delete invalid image
             os.remove(save_path)
 
             return render_template(
@@ -565,23 +522,34 @@ def upload_file():
                 message='Please upload a valid retina scan image only'
             )
 
-        # ================= AI PREDICTION =================
-
         diagnosis, probabilities = predict_class(save_path)
+
+        confidence = round(max(probabilities) * 100, 2)
+
+        print("Saving to database:", filename, diagnosis, confidence)
+
+        query = """
+        INSERT INTO scan_history
+        (image_name, diagnosis, confidence)
+        VALUES (%s, %s, %s)
+        """
+
+        cursor.execute(
+            query,
+            (filename, diagnosis, confidence)
+        )
+
+        db.commit()
 
         timestamp = datetime.now().strftime(
             "%d-%m-%Y %H:%M"
         )
-
-        # ================= GENERATE PDF =================
 
         pdf_file = generate_pdf_report(
             save_path,
             diagnosis,
             probabilities
         )
-
-        # ================= SHOW RESULT PAGE =================
 
         return render_template(
             'predict.html',
@@ -611,7 +579,42 @@ def download_report():
     pdf_file = generate_pdf_report(image_path, diagnosis, probabilities)
     return send_file(pdf_file, as_attachment=True)
 
+#================================================
+def is_retina_image(path):
 
+    img = cv2.imread(path)
 
+    if img is None:
+        return False
+
+    img = cv2.resize(img, (300, 300))
+
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    lower_red = np.array([0, 20, 20])
+    upper_red = np.array([30, 255, 255])
+
+    mask = cv2.inRange(hsv, lower_red, upper_red)
+
+    red_pixels = cv2.countNonZero(mask)
+
+    total_pixels = img.shape[0] * img.shape[1]
+
+    red_ratio = red_pixels / total_pixels
+
+    print("Red Ratio =", red_ratio)
+
+    if red_ratio < 0.08:
+        return False
+
+    return True
+#==========================================
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/dashboard')
+
+ 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -41,9 +41,18 @@
   ======================================================== -->
 </head>
 <style>
-  .about,
+body{
+    background: linear-gradient(
+        135deg,
+        #e0f7fa,
+        #dbeafe,
+        #dcfce7
+    );
+}
+
+.about,
 .values{
-  background: #f6f9ff;
+    background:#f6f9ff;
 }
 #predict{
   background: #eef2fb;
@@ -120,18 +129,23 @@
         <span>RETINEX</span>
       </a>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          
+   <nav id="navbar" class="navbar">
+    <ul>
+        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <li><a class="nav-link scrollto" href="#about">About</a></li>
+        <li><a class="nav-link scrollto" href="#team">Team</a></li>
+        <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
+        
 
-          <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
-          <li><a class="getstarted scrollto" href="templates\predict.html">Predict</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+
+        <li>
+            <a class="getstarted" href="{{ url_for('doctor_dashboard') }}">
+                DR Dashboard
+            </a>
+        </li>
+    </ul>
+    <i class="bi bi-list mobile-nav-toggle"></i>
+</nav><!-- .navbar -->
 
     </div>
   </header><!-- End Header -->
@@ -146,9 +160,10 @@
           <h2 data-aos="fade-up" data-aos-delay="400">Aims to detect and classify retinal images for diabetic retinopathy diagnosis.</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
-              <a href="#predict" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                <span>Predict</span>
-                <i class="bi bi-arrow-right"></i>
+             <a href="/patientDashboard"
+                class="btn-get-started d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Patient Dashboard</span>
+                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
           </div>

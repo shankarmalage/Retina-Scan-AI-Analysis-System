@@ -439,24 +439,37 @@
 
         <!-- CONFIDENCE CARD -->
         <div class="confidence-card">
-          <div class="confidence-header">
-            <h5>Confidence Analysis</h5>
-            <span class="badge-high">High Confidence</span>
-          </div>
 
-          <p class="conf-label">Positive Detection</p>
-          <div class="conf-bar">
-            <div class="conf-fill positive" style="width: {{ (probabilities[0] * 100) | round(1) }}%;"></div>
-          </div>
-          <p class="conf-value">{{ (probabilities[0] * 100) | round(1) }}%</p>
+    <div class="confidence-header">
+        <h5>Confidence Analysis</h5>
+        <span class="badge-high">High Confidence</span>
+    </div>
 
-          <p class="conf-label mt-3">Negative Detection</p>
-          <div class="conf-bar">
-            <div class="conf-fill negative" style="width: {{ (probabilities[1] * 100) | round(1) }}%;"></div>
-          </div>
-          <p class="conf-value">{{ (probabilities[1] * 100) | round(1) }}%</p>
+    <p class="conf-label">Positive Detection</p>
+
+    <div class="conf-bar">
+        <div class="conf-fill positive"
+             style="width: {{ (probabilities[0] * 100) | round(1) }}%;">
         </div>
+    </div>
 
+    <p class="conf-value">
+        {{ (probabilities[0] * 100) | round(1) }}%
+    </p>
+
+    <p class="conf-label mt-3">Negative Detection</p>
+
+    <div class="conf-bar">
+        <div class="conf-fill negative"
+             style="width: {{ (probabilities[1] * 100) | round(1) }}%;">
+        </div>
+    </div>
+
+    <p class="conf-value">
+        {{ (probabilities[1] * 100) | round(1) }}%
+    </p>
+
+</div>
         <!-- INSIGHTS CARD -->
         <div class="insight-card">
           <h5>Clinical Insights</h5>
