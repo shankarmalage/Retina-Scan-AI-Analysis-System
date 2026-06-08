@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Sent</title>
+
+    <style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    body{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#0f172a,#0284c7);
+    }
+
+    .card{
+        background:white;
+        width:600px;
+        text-align:center;
+        padding:50px;
+        border-radius:25px;
+        box-shadow:0 15px 40px rgba(0,0,0,0.25);
+    }
+
+    .icon{
+        font-size:80px;
+        margin-bottom:20px;
+    }
+
+    h1{
+        color:#16a34a;
+        margin-bottom:15px;
+    }
+
+    p{
+        color:#555;
+        font-size:18px;
+        line-height:1.6;
+    }
+
+    .btn{
+        display:inline-block;
+        margin-top:30px;
+        padding:15px 30px;
+        background:#2563eb;
+        color:white;
+        text-decoration:none;
+        border-radius:12px;
+        font-weight:bold;
+    }
+
+    .btn:hover{
+        background:#1d4ed8;
+    }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">📧✅</div>
+
+    <h1>Email Sent Successfully!</h1>
+
+    <p>
+        Your follow-up reminder email has been sent successfully.
+        Please check your registered email inbox.
+    </p>
+
+    <a href="/followup_reminder" class="btn">
+        Back to Reminder Page
+    </a>
+
+</div>
+
+</body>
+</html>

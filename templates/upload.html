@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Retina Scan</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#0f172a,#1e3a8a,#0891b2);
+        }
+
+        .upload-container{
+            width:500px;
+            background:white;
+            padding:40px;
+            border-radius:25px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.25);
+            text-align:center;
+        }
+
+        .upload-container h1{
+            color:#1e3a8a;
+            margin-bottom:10px;
+        }
+
+        .upload-container p{
+            color:#666;
+            margin-bottom:30px;
+        }
+
+        .upload-icon{
+            font-size:70px;
+            margin-bottom:20px;
+        }
+
+        .file-box{
+            border:3px dashed #3b82f6;
+            border-radius:15px;
+            padding:30px;
+            margin-bottom:25px;
+            background:#f8fafc;
+        }
+
+        input[type="file"]{
+            width:100%;
+            padding:12px;
+            border:2px solid #dbeafe;
+            border-radius:10px;
+            cursor:pointer;
+        }
+
+        .upload-btn{
+            width:100%;
+            padding:15px;
+            border:none;
+            border-radius:12px;
+            background:linear-gradient(90deg,#2563eb,#06b6d4);
+            color:white;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .upload-btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 8px 20px rgba(37,99,235,0.4);
+        }
+
+        .back-btn{
+            display:inline-block;
+            margin-top:20px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+        .back-btn:hover{
+            color:#1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="upload-container">
+
+    <div class="upload-icon">👁️</div>
+
+    <h1>Upload Retina Scan</h1>
+
+    <p>Upload a retina image for AI-powered Diabetic Retinopathy Detection</p>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+
+        <div class="file-box">
+            <input type="file" name="file" required>
+        </div>
+
+        <button type="submit" class="upload-btn">
+            🚀 Upload & Analyze
+        </button>
+
+    </form>
+
+    <a href="/doctor_dashboard" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

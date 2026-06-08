@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#0F172A,#1E293B,#0F766E);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            width:100%;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:40px;
+        }
+        .form-card{
+            width:600px;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,0.15);
+            padding:50px;
+            border-radius:30px;
+            box-shadow:0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        h2{
+            text-align:center;
+            color:white;
+            font-size:38px;
+            margin-bottom:30px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:10px;
+            font-weight:600;
+            color:white;
+            font-size:16px;
+        }
+
+        input{
+                width:100%;
+                padding:15px;
+                border:none;
+                border-radius:15px;
+                background:rgba(255,255,255,0.12);
+                color:white;
+                font-size:16px;
+                margin-bottom:25px;
+            }
+
+            input::placeholder{
+                color:#ddd;
+            }
+
+            input:focus{
+                outline:none;
+                border:2px solid #6366F1;
+            }
+           button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,#4F46E5,#6366F1);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(99,102,241,0.5);
+}
+
+        .icon{
+    text-align:center;
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="form-card">
+
+        <div class="icon">🏥</div>
+
+        <h2>Book Appointment</h2>
+
+        <form method="POST">
+
+        <label>Doctor Name</label>
+        <input type="text" name="doctor" required>
+
+        <label>Appointment Date</label>
+        <input type="date" name="date" required>
+
+        <label>Appointment Time</label>
+        <input type="time" name="time" required>
+
+        <button type="submit">
+            Book Appointment
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

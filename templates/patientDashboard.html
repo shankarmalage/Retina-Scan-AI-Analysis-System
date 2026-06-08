@@ -99,6 +99,7 @@ body{
 
 .stats-grid{
     margin-top:25px;
+    margin-bottom:30px;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
@@ -139,7 +140,7 @@ body{
 
 .card{
     background:white;
-    padding:25px;
+    padding:30px;
     border-radius:20px;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
@@ -154,7 +155,6 @@ body{
 }
 
 .progress-fill{
-    width:85%;
     height:100%;
     background:linear-gradient(90deg,#22c55e,#16a34a);
 }
@@ -171,6 +171,7 @@ body{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:15px;
+    margin-top:20px;
 }
 
 .action-btn{
@@ -181,6 +182,9 @@ body{
     cursor:pointer;
     font-weight:600;
     transition:.3s;
+    text-align:center;
+    text-decoration:none;
+    color:#111827;
 }
 
 .action-btn:hover{
@@ -236,7 +240,7 @@ body{
 
         <div class="user-info">
             <div>
-                <strong>Shankar</strong><br>
+                <strong>{{ username }}</strong><br>
                 <small>patient@gmail.com</small>
             </div>
 
@@ -258,29 +262,22 @@ body{
     <!-- Statistics -->
     <div class="stats-grid">
 
-        <div class="stat-card">
+       <div class="stat-card">
             <div class="stat-icon">📅</div>
             <h3>Appointments</h3>
-            <div class="stat-value">3</div>
+            <div class="stat-value">{{ appointment_count }}</div>
         </div>
-
         <div class="stat-card">
             <div class="stat-icon">💊</div>
             <h3>Prescriptions</h3>
             <div class="stat-value">2</div>
         </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">📂</div>
-            <h3>Records</h3>
-            <div class="stat-value">12</div>
-        </div>
-
-        <div class="stat-card">
+            <div class="stat-card">
             <div class="stat-icon">❤️</div>
-            <h3>Health Score</h3>
-            <div class="stat-value">85%</div>
-        </div>
+            
+              <h3>Health Score</h3>
+            <div class="stat-value">{{ health_score }}%</div>
+         </div>
 
         <div class="stat-card">
             <div class="stat-icon">🤖</div>
@@ -291,58 +288,73 @@ body{
     </div>
 
     <!-- Quick Actions -->
-    <div class="section">
-          <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;color:white;">
-    Quick Actions
-</h2>
+    <div class="actions">
+    
+    <a href="{{ url_for('view_records') }}" class="action-btn">
+        📁 View Records
+    </a>
 
-        <div class="actions">
-            <button class="action-btn">📅 Book Appointment</button>
-            <button class="action-btn">📂 View Records</button>
-            <button class="action-btn">💊 Prescriptions</button>
-            <button class="action-btn">📞 Contact Doctor</button>
-        </div>
-    </div>
+    <a href="/book_appointment" class="action-btn">
+        📅 Book Appointment
+    </a>
 
-    <!-- Health Progress -->
-    <div class="section">
-          <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;color:white;">
-    Health Progress
+    <a href="/appointments" class="action-btn">
+        📋 My Appointments
+    </a>
 
-</h2>
 
-        <div class="card">
-            <h3>Overall Health</h3>
+   <a href="/contact_doctor" class="action-btn">
+    📞 Contact Doctor
+</a>
 
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+</div>
+
+  <div class="section">
+    <h2 class="section-title" style="color:white;">
+        Health Progress
+    </h2>
+
+    <div class="card">
+        <h3 style="margin-bottom:15px;">Overall Health</h3>
+
+        <div class="progress-bar">
+            <div class="progress-fill"
+                 style="width: {{ health_score }}%;">
             </div>
-
-            <p style="margin-top:10px;">85% Healthy</p>
         </div>
-    </div>
 
+        <p style="margin-top:15px;">
+            {{ health_score }}% Healthy
+        </p>
+    </div>
+</div>  <!-- ADD THIS MISSING DIV -->
+
+<!-- Appointments -->
+<div class="section">
     <!-- Appointments -->
     <div class="section">
      <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;color:white;">
    Upcoming Appointements
 
 </h2>
-        <div class="card">
+       <div class="card">
 
+        {% if appointments %}
+            {% for appt in appointments %}
             <div class="appointment">
-                <strong>Dr. Sharma</strong><br>
-                Cardiology Checkup<br>
-                10 June 2026 - 10:00 AM
-            </div>
-
-            <div class="appointment">
-                <strong>Dr. Rao</strong><br>
-                Retina Examination<br>
-                15 June 2026 - 2:30 PM
-            </div>
-
+            <strong>{{ appt[0] }}</strong><br>
+            Appointment Date: {{ appt[1] }}<br>
+            Time: {{ appt[2] }}<br>
+            Status: {{ appt[3] }}
         </div>
+        {% endfor %}
+{% else %}
+    <p style="text-align:center;color:#666;">
+        No appointments booked yet.
+    </p>
+{% endif %}
+
+</div>
     </div>
 
     <!-- Medicine Reminder -->
@@ -361,30 +373,16 @@ body{
                 💊 Vitamin D - 9:00 PM
             </div>
 
-            <button class="emergency-btn">
-                🚑 Emergency Contact
-            </button>
-
+           <form action="/send_emergency" method="POST">
+                <button type="submit" class="emergency-btn">
+                    🚑 Emergency Alert
+               </button>
+             </form>
         </div>
     </div>
 
     <!-- Retina AI Section -->
-    <div class="section">
-     <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;color:white;">
-    AI Retina Detection
-
-</h2>
-        <div class="card">
-            <h3>Latest Scan Result</h3>
-
-            <br>
-
-            <p><strong>Status:</strong> Normal</p>
-            <p><strong>Confidence:</strong> 96%</p>
-            <p><strong>Recommendation:</strong> Continue regular checkups.</p>
-
-        </div>
-    </div>
+   
 
     <div class="footer">
         © 2026 MediCare Patient Dashboard

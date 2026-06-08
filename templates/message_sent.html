@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Sent</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0F172A,#1E293B,#0F766E);
+}
+
+.success-box{
+    width:500px;
+    text-align:center;
+    padding:50px;
+    border-radius:25px;
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.icon{
+    font-size:80px;
+    margin-bottom:20px;
+}
+
+h1{
+    color:#22c55e;
+    margin-bottom:15px;
+}
+
+p{
+    color:white;
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:12px;
+    background:#4F46E5;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#3730A3;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="success-box">
+
+    <div class="icon">📧</div>
+
+    <h1>Email Sent Successfully</h1>
+
+    <p>
+        Your message has been sent to the doctor successfully.
+    </p>
+
+    <a href="/patientDashboard" class="btn">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

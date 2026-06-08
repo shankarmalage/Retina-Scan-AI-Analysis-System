@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Login - RETINEX</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0F172A,#1E3A8A,#0891B2);
+    overflow:hidden;
+}
+
+.container{
+    width:1000px;
+    max-width:95%;
+    display:flex;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+
+.left-panel{
+    flex:1;
+    background:linear-gradient(135deg,#14B8A6,#06B6D4);
+    color:white;
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.left-panel h1{
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.left-panel p{
+    font-size:18px;
+    line-height:1.8;
+}
+
+.left-panel .icon{
+    font-size:100px;
+    margin-bottom:25px;
+}
+
+.right-panel{
+    flex:1;
+    background:white;
+    padding:60px 50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.login-title h2{
+    font-size:38px;
+    color:#0F172A;
+}
+
+.login-title p{
+    color:#64748B;
+    margin-top:8px;
+}
+
+.error{
+    text-align:center;
+    color:red;
+    margin-bottom:15px;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group input{
+    width:100%;
+    padding:15px;
+    border:2px solid #E2E8F0;
+    border-radius:14px;
+    font-size:15px;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    outline:none;
+    border-color:#14B8A6;
+}
+
+.login-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#14B8A6,#06B6D4);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.login-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(20,184,166,0.4);
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#64748B;
+}
+
+@media(max-width:768px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .left-panel{
+        padding:40px;
+        text-align:center;
+    }
+
+    .left-panel h1{
+        font-size:32px;
+    }
+
+    .right-panel{
+        padding:40px 25px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Left Side -->
+    <div class="left-panel">
+
+        <div class="icon">🩺</div>
+
+        <h1>RETINEX AI</h1>
+
+        <p>
+            Web Based Diabetic Retinopathy Detection System.
+            Secure access for doctors to manage patients,
+            review retina reports and monitor AI predictions.
+        </p>
+
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-panel">
+
+        <div class="login-title">
+            <h2>Doctor Login</h2>
+            <p>Access Doctor Dashboard</p>
+        </div>
+
+        {% if message %}
+        <div class="error">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Doctor Email"
+                    required>
+            </div>
+
+            <div class="input-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required>
+            </div>
+
+            <button type="submit" class="login-btn">
+             Login
+            </button>
+
+        <p style="text-align:center; margin-top:20px;">
+          Don't have an account?
+        <a href="/doctor_register">
+        Register Here
+    </a>
+</p>
+        </form>
+
+        <div class="footer">
+            🔒 Secure Medical Access Portal
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

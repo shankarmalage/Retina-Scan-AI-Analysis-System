@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Scan Records</title>
+
+    <style>
+
+        body{
+            font-family:Arial,sans-serif;
+            background:linear-gradient(135deg,#0b1437,#102f4f);
+            margin:0;
+            padding:30px;
+            color:white;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .header{
+            background:rgba(255,255,255,0.1);
+            backdrop-filter:blur(10px);
+            padding:20px;
+            border-radius:20px;
+            margin-bottom:25px;
+        }
+
+        .header h1{
+            margin:0;
+            font-size:32px;
+        }
+
+        .records-card{
+            background:white;
+            border-radius:20px;
+            padding:25px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th{
+            background:#5b5ef7;
+            color:white;
+            padding:15px;
+            text-align:left;
+        }
+
+        td{
+            padding:15px;
+            border-bottom:1px solid #eee;
+            color:#333;
+        }
+
+        tr:hover{
+            background:#f5f7ff;
+        }
+
+        .normal{
+            color:green;
+            font-weight:bold;
+        }
+
+        .dr{
+            color:red;
+            font-weight:bold;
+        }
+
+        .back-btn{
+            display:inline-block;
+            margin-bottom:20px;
+            background:#5b5ef7;
+            color:white;
+            padding:10px 20px;
+            text-decoration:none;
+            border-radius:10px;
+        }
+
+        .back-btn:hover{
+            background:#4447e5;
+        }
+
+body{
+    font-family:Arial;
+}
+
+/* Your existing CSS */
+
+/* Download Button */
+.download-btn{
+    display:inline-block;
+    background:#2563EB;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    min-width:120px;
+    text-align:center;
+    white-space:nowrap;
+}
+
+.download-btn:hover{
+    background:#1D4ED8;
+}
+
+/* ADD HERE */
+th:last-child,
+td:last-child{
+    width:150px;
+    text-align:center;
+}
+
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <a href="/patientDashboard" class="back-btn">
+        ← Back Dashboard
+    </a>
+
+    <div class="header">
+        <h1>📋 My Retina Scan Records</h1>
+    </div>
+
+    <div class="records-card">
+
+        <table>
+
+<tr>
+    <th>ID</th>
+    <th>Patient ID</th>
+    <th>Image</th>
+    <th>Diagnosis</th>
+    <th>Confidence</th>
+    <th>Date</th>
+    <th>Download</th>
+</tr>
+
+{% for record in records %}
+<tr>
+    <td>{{ record[0] }}</td>
+    <td>{{ record[5] }}</td>
+    <td>{{ record[1] }}</td>
+
+    <td>
+        {% if "No Diabetic" in record[2] %}
+            <span class="normal">{{ record[2] }}</span>
+        {% else %}
+            <span class="dr">{{ record[2] }}</span>
+        {% endif %}
+    </td>
+
+    <td>{{ record[3] }}%</td>
+    <td>{{ record[4] }}</td>
+
+    <td>
+        <a href="/download_report/{{ record[0] }}"
+   class="download-btn"
+   target="_blank">
+    Download PDF
+</a>
+    </td>
+</tr>
+{% endfor %}

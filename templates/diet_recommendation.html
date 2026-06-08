@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diet Recommendation</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#0f172a,#0284c7);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            width:90%;
+            max-width:1000px;
+            background:white;
+            border-radius:25px;
+            padding:40px;
+            box-shadow:0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        h1{
+            text-align:center;
+            color:#2563eb;
+            margin-bottom:30px;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        .card{
+            padding:25px;
+            border-radius:15px;
+        }
+
+        .good{
+            background:#dcfce7;
+            border-left:6px solid #16a34a;
+        }
+
+        .bad{
+            background:#fee2e2;
+            border-left:6px solid #dc2626;
+        }
+
+        h2{
+            margin-bottom:15px;
+        }
+
+        ul{
+            padding-left:20px;
+            line-height:2;
+        }
+
+        .tip{
+            margin-top:25px;
+            background:#dbeafe;
+            padding:20px;
+            border-radius:15px;
+            color:#1e3a8a;
+            font-weight:600;
+        }
+
+        .btn{
+            display:block;
+            width:250px;
+            margin:30px auto 0;
+            text-align:center;
+            background:#2563eb;
+            color:white;
+            text-decoration:none;
+            padding:14px;
+            border-radius:12px;
+            font-weight:bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🥗 Diabetes Diet Recommendation</h1>
+
+    <div class="grid">
+
+        <div class="card good">
+            <h2>✅ Foods to Eat</h2>
+
+            <ul>
+                <li>Green Leafy Vegetables</li>
+                <li>Carrots</li>
+                <li>Broccoli</li>
+                <li>Fish (Omega-3)</li>
+                <li>Eggs</li>
+                <li>Nuts & Almonds</li>
+                <li>Whole Grains</li>
+                <li>Low-fat Milk</li>
+                <li>Beans & Lentils</li>
+            </ul>
+        </div>
+
+        <div class="card bad">
+            <h2>❌ Foods to Avoid</h2>
+
+            <ul>
+                <li>Soft Drinks</li>
+                <li>Ice Cream</li>
+                <li>White Bread</li>
+                <li>Cakes & Pastries</li>
+                <li>Fast Food</li>
+                <li>Fried Foods</li>
+                <li>Excess Sugar</li>
+                <li>Processed Snacks</li>
+                <li>Alcohol</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="tip">
+        💡 Tip: Maintaining healthy blood sugar levels can reduce the risk of Diabetic Retinopathy progression and help protect your vision.
+    </div>
+
+    <a href="/doctor_dashboard" class="btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

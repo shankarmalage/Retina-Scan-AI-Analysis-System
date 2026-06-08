@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Appointments</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0F172A,#1E293B,#0F766E);
+    min-height:100vh;
+    padding:40px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:white;
+    margin-bottom:30px;
+    font-size:40px;
+}
+
+.table-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#4F46E5;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+td{
+    padding:15px;
+    text-align:center;
+    color:white;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+tr:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+.pending{
+    color:#facc15;
+    font-weight:bold;
+}
+
+.confirmed{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.cancel-btn{
+    background:#ef4444;
+    color:white;
+    text-decoration:none;
+    padding:8px 15px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.cancel-btn:hover{
+    background:#dc2626;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    background:#4F46E5;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+}
+
+.back-btn:hover{
+    background:#3730A3;
+}
+.confirm-btn{
+    background:#22c55e;
+    color:white;
+    text-decoration:none;
+    padding:8px 15px;
+    border-radius:8px;
+    margin-right:5px;
+    font-weight:bold;
+}
+
+.confirm-btn:hover{
+    background:#16a34a;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="/patientDashboard" class="back-btn">
+        ← Back Dashboard
+    </a>
+
+    <h1>📅 My Appointments</h1>
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for appt in appointments %}
+            <tr>
+
+                <td>{{ appt[1] }}</td>
+                <td>{{ appt[2] }}</td>
+                <td>{{ appt[3] }}</td>
+
+                <td>
+                    {% if appt[4] == 'Pending' %}
+                        <span style="color:#facc15;font-weight:bold;">
+                            Pending
+                        </span>
+
+                    {% elif appt[4] == 'Confirmed' %}
+                        <span style="color:#22c55e;font-weight:bold;">
+                            Confirmed
+                        </span>
+
+                    {% elif appt[4] == 'Cancelled' %}
+                        <span style="color:#ef4444;font-weight:bold;">
+                            Cancelled
+                        </span>
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    {% if appt[4] == 'Pending' %}
+
+                    <a href="/confirm_appointment/{{ appt[0] }}" class="confirm-btn">
+                        Confirm
+                    </a>
+
+                    <a href="/cancel_appointment/{{ appt[0] }}" class="cancel-btn">
+                        Cancel
+                    </a>
+
+                    {% else %}
+
+                    {{ appt[4] }}
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
